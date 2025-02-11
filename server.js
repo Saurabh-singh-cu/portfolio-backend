@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const connectDB = require("./db");
+require('dotenv').config();
 
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
@@ -17,14 +18,14 @@ app.use("/booking", bookingRouter);
 const userRouter = require("./routes/UserRoute");
 app.use("/user", userRouter);
 
-
 connectDB();
 app.use(express.json());
 app.get("/", function (req, res) {
   res.send("hello world");
 });
 
-const port = 3000;
-app.listen(3000, () => {
-  console.log("Server Listining on :", port);
+
+const PORT = process.env.PORT || 3000
+app.listen(PORT, () => {
+  console.log("Server Listining on :", PORT);
 });
