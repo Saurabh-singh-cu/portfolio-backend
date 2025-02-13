@@ -3,7 +3,8 @@ require('dotenv').config();
 
 
 const MONGO_URL = process?.env?.DB_URL;
-// const MONGO_URL = process.env.MONGO_URL || "mongodb+srv://saurabh0101906:Pplosdaa02@1234@cluster0.8mvoy.mongodb.net/"
+// const MONGO_URL = process?.env?.DB_URL_LOCAL;
+// const MONGO_URL = process.env.MONGO_URL || "mongodb+srv://saurabh0101906:Pplosdaa02@cluster0.8mvoy.mongodb.net/"
 
 const connectDB = async () => {
   try {

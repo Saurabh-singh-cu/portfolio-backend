@@ -15,7 +15,7 @@ app.use("/person", personRoute);
 const bookingRouter = require("./routes/BookingRouter");
 app.use("/booking", bookingRouter);
 
-const userRouter = require("./routes/UserRoute");
+const userRouter = require("./routes/userRoute");
 app.use("/user", userRouter);
 
 connectDB();
