@@ -3,27 +3,34 @@ const app = express();
 const connectDB = require("./db");
 require("dotenv").config();
 const cors = require("cors");
-
 const bodyParser = require("body-parser");
-app.use(bodyParser.json());
 
-//middle ware
+// Middleware
+app.use(bodyParser.json());
+app.use(express.json()); // Move this up, before routes
 
 const logRequest = (req, res, next) => {
-  console.log(
-    `[${new Date().toLocaleString()}] Request received for ${req.originalUrl}`
-  );
+  console.log(`[${new Date().toLocaleString()}] Request received for ${req.originalUrl}`);
   next();
 };
 app.use(logRequest);
 
+// Corrected CORS Configuration
 const allowOrigin = [
   "http://localhost:3000",
-  "https://harmonious-llama-0bcd0f.netlify.app/",
+  "https://harmonious-llama-0bcd0f.netlify.app",
 ];
 
-app.use(cors({ origin: allowOrigin, credentials: true }));
+app.use(
+  cors({
+    origin: allowOrigin,
+    credentials: true, // Important for cookies/auth
+    methods: "GET,POST,PUT,DELETE", // Explicitly define allowed methods
+  })
+);
+app.options("*", cors()); // Handles preflight requests
 
+// Routes
 const menuItemRouter = require("./routes/menuItemRouter");
 const personRoute = require("./routes/personRoute");
 const bookingRouter = require("./routes/BookingRouter");
@@ -35,12 +42,13 @@ app.use("/booking", bookingRouter);
 app.use("/user", userRouter);
 
 connectDB();
-app.use(express.json());
+
 app.get("/", function (req, res) {
   res.send("hello world");
 });
 
-const PORT = process.env.PORT || 3000;
+// Start server
+const PORT = process.env.PORT || 5000; // Change default port to 5000 for better backend/frontend separation
 app.listen(PORT, () => {
-  console.log("Server Listining on :", PORT);
+  console.log("Server Listening on:", PORT);
 });
