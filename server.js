@@ -26,6 +26,7 @@ app.use(
     origin: allowOrigin,
     credentials: true, // Important for cookies/auth
     methods: "GET,POST,PUT,DELETE", // Explicitly define allowed methods
+    allowedHeaders: "Content-Type, Authorization"
   })
 );
 app.options("*", cors()); // Handles preflight requests
