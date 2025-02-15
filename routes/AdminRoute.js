@@ -11,7 +11,7 @@ const isAuthenticated = (req, res, next) => {
   res.status(401).json({ message: "Unauthorized Access" });
 };
 
-router.get("/", isAuthenticated, async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const data = await Admin.find();
     res.status(200).json(data);

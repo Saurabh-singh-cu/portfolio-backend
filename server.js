@@ -6,8 +6,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 
 // Middleware
-app.use(bodyParser.json());
-app.use(express.json()); // Move this up, before routes
+
 
 const logRequest = (req, res, next) => {
   console.log(`[${new Date().toLocaleString()}] Request received for ${req.originalUrl}`);
@@ -30,17 +29,20 @@ app.use(
   })
 );
 app.options("*", cors()); // Handles preflight requests
-
+app.use(bodyParser.json());
+app.use(express.json()); // Move this up, before routes
 // Routes
 const menuItemRouter = require("./routes/menuItemRouter");
 const personRoute = require("./routes/personRoute");
 const bookingRouter = require("./routes/BookingRouter");
 const userRouter = require("./routes/userRoute");
+const AdminRoute = require("./routes/AdminRoute");
 
 app.use("/menu-item", menuItemRouter);
 app.use("/person", personRoute);
 app.use("/booking", bookingRouter);
 app.use("/user", userRouter);
+app.use("/admin", AdminRoute)
 
 connectDB();
 
