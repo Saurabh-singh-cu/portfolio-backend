@@ -1,9 +1,11 @@
 const express = require("express");
 const app = express();
 const connectDB = require("./db");
+const nodemailer = require("nodemailer");
 require("dotenv").config();
 const cors = require("cors");
 const bodyParser = require("body-parser");
+require("dotenv").config();
 
 // Middleware
 
@@ -18,6 +20,7 @@ app.use(logRequest);
 const allowOrigin = [
   "http://localhost:3000",
   "https://harmonious-llama-0bcd0f.netlify.app",
+  "https://celadon-phoenix-57fa69.netlify.app/",
 ];
 
 app.use(
@@ -28,6 +31,9 @@ app.use(
     allowedHeaders: "Content-Type, Authorization"
   })
 );
+
+
+
 app.options("*", cors()); // Handles preflight requests
 app.use(bodyParser.json());
 app.use(express.json()); // Move this up, before routes
@@ -45,6 +51,9 @@ app.use("/user", userRouter);
 app.use("/admin", AdminRoute)
 
 connectDB();
+console.log("Current Working Directory:", process.cwd());
+console.log("Environment Variables:", process.env);
+
 
 app.get("/", function (req, res) {
   res.send("hello world");
